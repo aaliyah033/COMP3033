@@ -1,4 +1,3 @@
-//Example: from week2 --- connect-server.js
 
 //STEP 1: Import Link connect and url packages
 const connect = require('connect');
