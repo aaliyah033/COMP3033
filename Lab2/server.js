@@ -53,6 +53,7 @@ function Lab2Handler(req, res, next) {
 
     //STEP 9: The respond.
     //since it's was a number have to make it into a string and respond
+    res.end(JSON.stringify(CalResponseApi));
 }
 
 
