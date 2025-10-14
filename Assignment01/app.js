@@ -7,6 +7,9 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+//Contacts API router
+var contactsRouter = require('./routes/api/contacts');
+
 //For global and mongoose connection
 var configs = require('./config/globals');
 var mongoose = require('mongoose');
@@ -26,6 +29,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+//Contacts API route
+app.use('/api/contacts', contactsRouter);
 
 // mongoose connection
 mongoose
