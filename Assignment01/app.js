@@ -7,6 +7,11 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+//For global and mongoose connection
+var configs = require('./config/globals');
+var mongoose = require('mongoose');
+
+
 var app = express();
 
 // view engine setup
@@ -21,6 +26,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+// mongoose connection
+mongoose
+  .connect(configs.connectionString.MongoDB)
+  .then(() => console.log("Connected successfully to MongoDB"))
+  .catch((error) => console.error("Error connecting to MongoDB:", error));
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
