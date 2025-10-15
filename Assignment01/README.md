@@ -10,9 +10,15 @@
     - delete.
 ---
 ## Site Link (used Render)
-[Assignment01] ()
+[Assignment01]()
 
 ---
+## Reference used 
+- "class Lessons week4 code" (Jesus Eduardo Jaime, Web Frameworks and APIs - 01, COMP3033)
+- "class Lessons week5 code" (Jesus Eduardo Jaime, Web Frameworks and APIs - 01, COMP3033)
+- https://mongoosejs.com/docs/api/model.html#Model.find()
+- https://expressjs.com/en/guide/routing.html
+
 
 
 
