@@ -7,10 +7,17 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+//ADDED - for routes /api/spareparts.js
+var sparepartsAPIRouter = require('./routes/api/spareparts');
+
 //ADDED - for API routes
 //import global configuration and mongoose 
 var configs = require('./config/globals');
 var mongoose = require('mongoose');
+
+//ADDED - for AUTH with Passport
+var passport = require('passport');
+var BasicStrategy = require('passport-http').BasicStrategy;
 
 var app = express();
 
@@ -24,8 +31,40 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//ADDED - Authentication configure Passport and Basic Strategy
+app.use(passport.initialize());
+passport.use(
+  new BasicStrategy(async (username, password, done) => {
+    const User = require('./models/user');
+    let existingUser = await User.find({username:username});
+    if (existingUser && existingUser.length > 0){
+      let AuthenticatedUser = await existingUser[0].authenticate(password);
+      //user found, now verify password
+      let isPasswordValid = AuthenticatedUser.user.username === username;
+      if (isPasswordValid){
+        console.log("Authentication successful for user",existingUser[0].username);
+        return done(null, existingUser[0]); //authentication successful
+      } else {
+        return done(null, false); //invalid password
+      }
+    } else {
+      return done(null, false); //user not found
+    }
+  })
+);
+
+
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/users', 
+  //ADDED - protect the users route with Basic Authentication
+  passport.authenticate('basic', { session: false }),
+usersRouter);
+
+//ADDED - for the routes/api/spareparts.js
+app.use('/api/spareparts',
+  //ADDED - protect the users route with Basic Authentication
+  passport.authenticate('basic', { session: false }),
+  sparepartsAPIRouter);
 
 //ADDED - connect to MongoDB using mongoose and the connection string from globals.js
 //connect to MongoDB
