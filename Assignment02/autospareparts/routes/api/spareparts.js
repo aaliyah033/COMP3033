@@ -3,9 +3,40 @@
 //Import required modules express, and router object 
 const express = require('express');
 const router = express.Router();
+require('dotenv').config(); //for the nodemailer
+
+//ADDED - import nodmailer for email notifications
+const nodemailer = require('nodemailer');
 
 //Import the SparePart model object
 const SparePart = require("../../models/autosparepart");
+
+//NodeMailer email Transporter configuration
+const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "aaliyahali0727@gmail.com",
+      pass: process.env.GOOGLE_APP_PASSWORD,
+    },
+  });
+
+//ADDED - Function to send email when stock is low 
+async function sendLowStockEmail(part) {
+(async () => {
+    try {
+        const info = await transporter.sendMail({
+        from: '"Owner" <aaliyahali0727@gmail.com>',
+        to: "aaliyahhr003@gmail.com>",
+        subject: `IMPORTANT! Low Stock Alert: ${part.name}`, //subject
+        text: `The low stock Alert\n\nItem: ${part.name} \nSpare Number: ${part.spareNumber}\nRemaining Quantity only left: ${part.quantity}\n\n Please restock soon!`, //text body
+        });
+        console.log("Message sent:", info.messageId);
+
+        } catch (error) {
+        console.log("Error occurred. " + error.message);
+        }
+    })();
+}
 
 //ADDED - Swagger for GET /api/spareparts
 
@@ -99,9 +130,9 @@ router.post("/", async (req, res) => {
         res.status(400).json({ValidationError: "Name is a required field"});
     } else if (!req.body.spareNumber){
         res.status(400).json({ValidationError: "Spare Number is a required field"});
-    } else if (!req.body.quantity == null){
+    } else if (req.body.quantity == null){
         res.status(400).json({ValidationError: "Quantity is a required field"});
-    } else if (!req.body.price == null){
+    } else if (req.body.price == null){
         res.status(400).json({ValidationError: "Price is a required field"});
     } else {
         try {
@@ -115,6 +146,13 @@ router.post("/", async (req, res) => {
                 position: req.body.position,
                 supplyCountry: req.body.supplyCountry
             });
+
+        //ADDED - check if quantity is less than 3 to send low stock email
+        if (newSparePart.quantity < 3) {
+            //send low stock email notification
+           await sendLowStockEmail(newSparePart);
+        }
+
         //send back the newly created saved spare part as JSON
           res.status(200).json(newSparePart);
         } catch (error) { // catch any server errors
@@ -179,9 +217,9 @@ router.put("/:_id", async (req, res) => {
         res.status(400).json({ValidationError: "Name is a required field"});
     } else if (!req.body.spareNumber){
         res.status(400).json({ValidationError: "Spare Number is a required field"});
-    } else if (!req.body.quantity == null){
+    } else if (req.body.quantity == null){
         res.status(400).json({ValidationError: "Quantity is a required field"});
-    } else if (!req.body.price == null){
+    } else if (req.body.price == null){
         res.status(400).json({ValidationError: "Price is a required field"});
     } else { 
         //updating the spare part in the database
@@ -200,6 +238,12 @@ router.put("/:_id", async (req, res) => {
                     { _id: req.params._id }, // filter query by _id
                     updatedSparePart
                 );
+
+            //ADDED - check if quantity is less than 3 to send low stock email
+            if (updatedSparePart.quantity < 3) {
+                //send low stock email notification
+                await sendLowStockEmail(updatedSparePart);
+            }
             //send back the updated spare part as JSON
             res.status(200).json(updatedSparePart);
             } catch (error) { // catch any server errors
