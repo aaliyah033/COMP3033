@@ -3,6 +3,120 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-a {
-  color: #00B7FF;
+.landing-container{
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 40px;
+}
+
+.landing-title{
+  font-size: 36px;
+  margin-bottom: 30px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.home-container{
+  background-color: #18427D ;
+  padding: 40px;
+  border-radius: 10px;
+  width: 650px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.api-description,
+.api-reminder,
+.api-insomnia {
+  color: white;
+  font-size: 18px;
+  margin-top: 10px;
+
+}
+
+.api-insomnia span{
+  font-weight: bold;
+  font-style: italic;
+}
+
+.btn-container{
+  margin: 30px;
+}
+
+.btn-register-landing{
+  display: inline-block;
+  padding: 10px 40px;
+  font-size: 16px;
+  color: #f6f2f2;
+  background-color: #042352;
+  border: none;
+  border-radius: 3px solid #f6f2f2;
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-register-landing:hover {
+  background-color: #f6f2f2;
+  color: #18427D;
+}
+
+/* For registration page  */
+.register-container {
+  width: 420px;
+  margin: 60px auto; 
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.register-title {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 25px;
+}
+
+
+.register-form .form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.register-form label {
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.register-form input,
+.register-form select {
+  padding: 4px;
+  border: 3px solid #18427D;
+  border-radius: 5px;
+}
+
+
+.btn-register {
+  width: 100%;
+  background-color: #071934;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.btn-register:hover {
+  background-color: #18427D;
+  color: white;
+}
+
+.text-success{
+  color: green;
 }

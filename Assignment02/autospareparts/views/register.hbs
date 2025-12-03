@@ -2,15 +2,12 @@
 
   <h1 class="register-title">Register</h1>
 
-  {{#if success}}
-      <p class="text-success">Registration successful!</p>
+  {{#if successMessage}}
+      <p class="{{#if isError}}text-danger{{else}}text-success{{/if}}">{{successMessage}}</p>
   {{/if}}
 
-  {{#if error}}
-      <p class="text-danger">{{error}}</p>
-  {{/if}}
 
-  <form method="post" class="register-form">
+  <form method="post" action="/register" class="register-form">
 
     <div class="form-group">
       <label for="name">Name: </label>
@@ -47,7 +44,7 @@
       <input name="confirm" id="confirm" type="password" required />
     </div>
 
-    <button class="btn-register">Register</button>
+    <button type="submit" class="btn-register">Register</button>
   </form>
 
 </div>
