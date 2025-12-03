@@ -8,6 +8,9 @@ require('dotenv').config(); //for the nodemailer
 //ADDED - import nodmailer for email notifications
 const nodemailer = require('nodemailer');
 
+//ADDED - import for XLSX file creation
+const XLSX = require("xlsx");
+
 //Import the SparePart model object
 const SparePart = require("../../models/autosparepart");
 
@@ -282,6 +285,46 @@ router.delete("/:_id", async (req, res) => {
   } catch (error) { // catch any server errors
     res.status(500).json({ ErrorMessage: "Server threw an exception" }); 
 }
+});
+
+//ADDED - for xlsx export functionality
+// GET /sparepartsreport  parameters NONE -- Export inventory data as an Excel report using XLSX package. When the user enters this endpoint, it automatically creates the EXCEL file with all spare parts data
+//REMINDER: full path is api/spareparts/sparepartsreport
+
+router.get("/sparepartsreport", async (req, res) => {
+    try{
+    //fetch all spare parts from the database
+    const spareParts = await SparePart.find();
+
+    //Array Map calling the spare parts data to format it for XLSX
+    const sparePartsData = spareParts.map((part) => ({
+        Name: part.name,
+        SpareNumber: part.spareNumber,
+        Quantity: part.quantity,
+        Color: part.color,
+        Price: part.price,
+        Position: part.position,
+        SupplyCountry: part.supplyCountry
+    }));
+    //Create a new workbook and worksheet
+    const workbook = XLSX.utils.book_new();
+    const worksheet = XLSX.utils.json_to_sheet(sparePartsData);
+    //Append the worksheet to the workbook
+    XLSX.utils.book_append_sheet(workbook, worksheet, "SparePartsReport");
+    //Write the workbook to a buffer and generate the booktype as xlsx
+    const sparePartBufferXLSX = XLSX.write(workbook, { type: "buffer", bookType: "xlsx" });
+    //Set the response headers for file download & file name
+    res.setHeader("Content-Disposition", "attachment; filename=SparePartsReport.xlsx");
+    //.xlsx	Microsoft Excel (OpenXML)	application/vnd.openxmlformats-officedocument.spreadsheetml.sheet 
+    res.setHeader("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+
+    //Send the buffer XLSX file as the response
+    res.send(sparePartBufferXLSX);
+    console.log("Spare Parts Excel report generated and sent successfully.");
+
+    } catch (error) {
+    res.status(500).json({ ErrorMessage: "Server threw an exception" });
+    } // catch any server errors
 });
 
 //export the router object
