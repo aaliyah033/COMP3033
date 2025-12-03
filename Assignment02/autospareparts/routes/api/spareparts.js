@@ -15,8 +15,8 @@ const SparePart = require("../../models/autosparepart");
  *   get:
  *     description: Lists all spare parts in the database, by name or number or both
  *     responses:
- *      200:
- *        description: Returns a list of all spare parts.
+ *       200:
+ *         description: Returns a list of all spare parts.
  */
 
 // GET api/spareparts/ - parameters: None or Name or Number or both 
@@ -45,6 +45,43 @@ router.get("/", async (req, res) => {
 });
 
 //ADDED - Swagger POST /api/spareparts
+
+/**
+ * @openapi
+ * /api/spareparts:
+ *   post:
+ *     description: Adds a new spare part
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - spareNumber
+ *               - quantity
+ *               - price
+ *             properties:
+ *               name:
+ *                 type: string
+ *               spareNumber:
+ *                 type: string
+ *               quantity:
+ *                 type: number
+ *               color:
+ *                 type: string
+ *               price:
+ *                 type: number
+ *               position:
+ *                 type: string
+ *                 enum: ["left", "right"]
+ *               supplyCountry:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Spare part created successfully
+ */
 
 // POST api/spareparts - parameters: JSON object containing spare parts information
 //Adds a new spare part in the database
@@ -89,6 +126,50 @@ router.post("/", async (req, res) => {
 
 //ADDED - Swagger PUT /api/spareparts/:_id
 
+/**
+ * @openapi
+ * /api/spareparts/{id}:
+ *   put:
+ *     description: Updates an existing spare part
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Spare part ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - spareNumber
+ *               - quantity
+ *               - price
+ *             properties:
+ *               name:
+ *                 type: string
+ *               spareNumber:
+ *                 type: string
+ *               quantity:
+ *                 type: number
+ *               color:
+ *                 type: string
+ *               price:
+ *                 type: number
+ *               position:
+ *                 type: string
+ *                 enum: ["left", "right"]
+ *               supplyCountry:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Spare part updated successfully
+ */
+
 // PUT api/spareparts/:_id - parameters: Id: spare parts ID to update, JSON object containing updated information
 //remember: with the spare ID - api/spareparts/:_id
 
@@ -128,6 +209,23 @@ router.put("/:_id", async (req, res) => {
 });
 
 //ADDED - Swagger DELETE /api/spareparts/:_id
+
+/**
+ * @openapi
+ * /api/spareparts/{id}:
+ *   delete:
+ *     description: Deletes a spare part using its ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Spare part ID
+ *     responses:
+ *       200:
+ *         description: Spare part deleted successfully
+ */
 
 // DELETE api/spareparts/:_id - parameters: Id: spare parts ID to be deleted
 
