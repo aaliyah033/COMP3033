@@ -1,6 +1,6 @@
 //models/user.js 
 const mongoose = require('mongoose');
-const plm = require('passport-local-mongoose'); 
+const plm = require('passport-local-mongoose').default; 
 
 //data schema object in JSON for user attributes
 // Name (required)
@@ -12,14 +12,14 @@ const UserSchemaObject = {
     username:{type: String, required: true}, 
     email: {type: String, required: true},
     name: {type: String, required: true},
-    role: {type: String, required: true, enum: ['Owner', 'Store Manager', 'Employee']}
+    role: {type: String, required: true, enum: ['Owner', 'Manager', 'Employee']}
 };
 
 //mongoose schema 
 let UserSchema = new mongoose.Schema(UserSchemaObject);
 
 //plugin to add passport local mongoose functionality to UserSchema - inject plm function to handle the Auth
-UserSchema.plugin(plm); 
+UserSchema.plugin(plm, {usernameField: 'username'}); //specifying username field - because we have email as well
 
 //export the mongoose model
 module.exports = mongoose.model('User', UserSchema);
