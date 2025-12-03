@@ -2,7 +2,7 @@
 
 - The **Auto Spare Parts Inventory Management API** is to help spare parts shops be efficient, organized, track, and manage spare parts inventory using a complete the CRUD operations for both users and spare parts. 
 - The API supports Basic Authentication to secure the API.
-- Sends Low-Stock inventory email alerts 
+- Sends Low-Stock inventory email alerts when the inventory is less than 3
 - Excel report exporting. 
 - Insomnia support. 
 

@@ -18,7 +18,7 @@ const SparePart = require("../../models/autosparepart");
 const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: "aaliyahali0727@gmail.com",
+      user: process.env.GOOGLE_EMAIL,
       pass: process.env.GOOGLE_APP_PASSWORD,
     },
   });
