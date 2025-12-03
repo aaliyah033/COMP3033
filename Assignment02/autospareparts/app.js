@@ -19,6 +19,10 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var BasicStrategy = require('passport-http').BasicStrategy;
 
+//ADDED - import the Swagger modules
+const swaggerUI = require("swagger-ui-express");
+const swaggerJSDoc = require("swagger-jsdoc");
+
 var app = express();
 
 // view engine setup
@@ -52,6 +56,35 @@ passport.use(
     }
   })
 );
+
+//ADDED - Swagger set up doc dynamically using JSDOC comments 
+//remember using - 	http://localhost:3000/docs/dynamic/
+const swaggerJSDocOptions = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Auto Spare Parts API",
+      version: "1.0.0",
+      description: "This API allows to manage auto spare parts and users in the system.",
+      contact: {
+        name: "Aaliyah Ally",
+        email: "200480504@student.georgianc.on.ca",
+        url: "https://github.com/aaliyah033"
+      }
+    },
+    servers: [
+       { url: "http://localhost:3000/api" },
+      { url: "http://localhost:3000"}
+    ]
+  },
+  apis: [
+    //files containing annotations as above
+    "./routes/api/*.js", //for the api routes
+    "./routes/*.js" //for other routes (basically the users route)
+  ]
+};
+const swaggerJSDocSpec = swaggerJSDoc(swaggerJSDocOptions);
+app.use("/docs/dynamic", swaggerUI.serve, swaggerUI.setup(swaggerJSDocSpec));
 
 
 app.use('/', indexRouter);

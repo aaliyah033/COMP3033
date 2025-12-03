@@ -7,6 +7,18 @@ const router = express.Router();
 //Import the SparePart model object
 const SparePart = require("../../models/autosparepart");
 
+//ADDED - Swagger for GET /api/spareparts
+
+/**
+ * @openapi
+ * /api/spareparts:
+ *   get:
+ *     description: Lists all spare parts in the database, by name or number or both
+ *     responses:
+ *      200:
+ *        description: Returns a list of all spare parts.
+ */
+
 // GET api/spareparts/ - parameters: None or Name or Number or both 
 //I want to achieve: 
     // by name - /api/spareparts?name=partname
@@ -31,6 +43,8 @@ router.get("/", async (req, res) => {
       res.status(500).json({ ErrorMessage: "Server threw an exception" }); 
 }
 });
+
+//ADDED - Swagger POST /api/spareparts
 
 // POST api/spareparts - parameters: JSON object containing spare parts information
 //Adds a new spare part in the database
@@ -72,6 +86,9 @@ router.post("/", async (req, res) => {
     }
 });
 
+
+//ADDED - Swagger PUT /api/spareparts/:_id
+
 // PUT api/spareparts/:_id - parameters: Id: spare parts ID to update, JSON object containing updated information
 //remember: with the spare ID - api/spareparts/:_id
 
@@ -109,6 +126,8 @@ router.put("/:_id", async (req, res) => {
             }
     }
 });
+
+//ADDED - Swagger DELETE /api/spareparts/:_id
 
 // DELETE api/spareparts/:_id - parameters: Id: spare parts ID to be deleted
 
