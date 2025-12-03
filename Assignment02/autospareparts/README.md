@@ -7,7 +7,7 @@
 - Insomnia support. 
 
 
-### 🔵 Spare Parts Endpoints
+### Spare Parts Endpoints
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
@@ -19,7 +19,7 @@
 
 
 
-### 🟣 User Endpoints
+### User Endpoints
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
