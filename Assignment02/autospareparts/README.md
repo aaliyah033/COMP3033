@@ -34,6 +34,20 @@
 [https://autospareparts.onrender.com/docs/dynamic](https://autospareparts.onrender.com/docs/dynamic)
 
 
+## References 
+
+- "class Lessons week5 - week11 code" (Jesus Eduardo Jaime, Web Frameworks and APIs - 01 COMP3033)
+- https://dev.to/kabartolo/how-to-document-an-express-api-with-swagger-ui-and-jsdoc-50do
+- https://www.mongodb.com/docs/manual/reference/operator/query/or/
+- https://expressjs.com/en/api.html
+- https://www.npmjs.com/package/helmet
+- https://nodemailer.com/
+- https://nodemailer.com/usage/using-gmail
+- https://docs.sheetjs.com/docs/getting-started/examples/export/
+- https://docs.sheetjs.com/docs/api/write-options/
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map
+- https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/MIME_types/Common_types
+- https://www.passportjs.org/concepts/authentication/http-basic/
 
 
 

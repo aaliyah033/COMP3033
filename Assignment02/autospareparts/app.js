@@ -82,7 +82,8 @@ const swaggerJSDocOptions = {
     },
     servers: [
       { url: "http://localhost:3000"},
-      //  { url: "http://localhost:3000/api" } //because we are using /api for the API routes
+      { url: "http://localhost:3000/api" }, //because we are using /api for the API routes
+      { url: "https://autospareparts.onrender.com" } //from deployed render to access the swagger 
     ]
   },
   apis: [
