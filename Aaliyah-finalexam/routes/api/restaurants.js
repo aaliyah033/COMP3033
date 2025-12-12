@@ -13,6 +13,17 @@ const Restaurant = require('../../models/restaurant');
 //IN GET - If no page value provided, result should default to page 1
 //IN GET - Each page should show only 10 items at a time
 
+//Swagger Documentation
+/**
+ * @openapi
+ * /api/restaurants:
+ *   get:
+ *     description: Lists all restaurants in the database
+ *     responses:
+ *       200:
+ *         description: Returns a list of restaurants
+ */
+
 router.get("/", async (req, res, next) => {
     let pageSize = parseInt(req.query.page) || 1; 
     let limitPage = 10; 
@@ -29,6 +40,41 @@ router.get("/", async (req, res, next) => {
         res.status(500).json({ ErrorMessage: "The Server threw an exception" }); 
     }
 });
+
+
+//Swagger Documentation
+/**
+ * @openapi
+ * /api/restaurants:
+ *   post:
+ *     description: Adds a new restaurant to the database
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - address
+ *               - phoneNumber
+ *               - emailAddress
+ *               - rating
+ *             properties:
+ *               name:
+ *                 type: string
+ *               address:
+ *                 type: string
+ *               phoneNumber:
+ *                 type: number
+ *               emailAddress:
+ *                 type: string
+ *               rating:
+ *                 type: number
+ *     responses:
+ *       200:
+ *         description: Restaurant created successfully
+ */
 
 //POST /api/restaurants  parameters : JSON object with restaurant information - Create a new restaurant record in the database with the information provided 
 router.post("/", async (req, res, next) => {
@@ -66,6 +112,24 @@ router.post("/", async (req, res, next) => {
         }
     }
 });
+
+//Swagger Documentation
+/**
+ * @openapi
+ * /api/restaurants/{id}:
+ *   delete:
+ *     description: Deletes a restaurant from the database
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the restaurant to delete
+ *     responses:
+ *       200:
+ *         description: Restaurant deleted successfully
+ */
 
 //DELETE /api/restaurants/:id   parameters : ID value of the restaurant to delete - Delete the restaurant from the database
 router.delete("/:id", async (req, res, next) => {

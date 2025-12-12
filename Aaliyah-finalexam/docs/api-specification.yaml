@@ -1,0 +1,111 @@
+# # // name: { type: String, required: true },
+# # // address: { type: String, required: true },
+# # // phoneNumber: { type: String, required: true },
+# # // emailAddress: { type: String, required: true },
+# # // rating: { type: Number, required: true, min: 1, max: 10 }
+
+# # //GET /api/restaurants   parameters : NONE - List all restaurants in the database (unfiltered)
+# # //IN GET - If no page value provided, result should default to page 1
+# # //IN GET - Each page should show only 10 items at a time
+
+# # //POST /api/restaurants  parameters : JSON object with restaurant information - Create a new restaurant record in the database with the information provided 
+
+# //DELETE /api/restaurants/:id   parameters : ID value of the restaurant to delete - Delete the restaurant from the database
+
+
+openapi: 3.0.0
+info:
+  title: Restaurants API
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3000/api
+
+paths:
+  /restaurants:
+    get:
+      summary: Get all restaurants
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+          description: Page number (10 items per page)
+      responses:
+        200:
+          description: List of restaurants
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Restaurant"
+
+    post:
+      summary: Create a new restaurant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RestaurantPUT"
+      responses:
+        201:
+          description: Restaurant created
+
+  /restaurants/{id}:
+    delete:
+      summary: Delete a restaurant by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Restaurant deleted
+
+components:
+  schemas:
+    Restaurant:
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        address:
+          type: string
+        phoneNumber:
+          type: string
+        emailAddress:
+          type: string
+        rating:
+          type: number
+          minimum: 1
+          maximum: 10
+
+    RestaurantPUT:
+      type: object
+      required:
+        - name
+        - address
+        - phoneNumber
+        - emailAddress
+        - rating
+      properties:
+        name:
+          type: string
+        address:
+          type: string
+        phoneNumber:
+          type: string
+        emailAddress:
+          type: string
+        rating:
+          type: number
+          minimum: 1
+          maximum: 10
+
