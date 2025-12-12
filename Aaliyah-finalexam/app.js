@@ -4,6 +4,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+//added for the mongoose and configs
+var configs = require('./config/globals');
+var mongoose = require('mongoose');
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
@@ -18,6 +22,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+//for mongoose connection
+mongoose
+  .connect(configs.connectionStrings.MongoDB)
+  .then(() => console.log("Connected successfully to MongoDB"))
+  .catch((error) => console.error("Error connecting to MongoDB:", error));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
