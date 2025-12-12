@@ -11,6 +11,9 @@ var mongoose = require('mongoose');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+//for restaurants API router
+var restaurantsRouter = require('./routes/api/restaurants');
+
 var app = express();
 
 // view engine setup
@@ -31,6 +34,9 @@ mongoose
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+//for restaurants API route
+app.use('/api/restaurants', restaurantsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
