@@ -62,6 +62,8 @@ const swaggerJSDocOptions = {
 const swaggerJSDocSpec = swaggerJSDoc(swaggerJSDocOptions);
 app.use("/docs/dynamic", swaggerUI.serve, swaggerUI.setup(swaggerJSDocSpec));
 
+//http://localhost:3000/docs/local/
+//http://localhost:3000/docs/dynamic/
 
 //YAML 
 const swaggerDoc = YAML.load("./docs/api-specification.yaml");
